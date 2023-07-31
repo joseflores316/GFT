@@ -4,6 +4,7 @@ import com.cronos.gft.application.service.PriceService;
 import com.cronos.gft.builder.PriceObjetcMother;
 import com.cronos.gft.infraestructure.adaptador.PriceJpaRepository;
 import com.cronos.gft.infraestructure.rest.mapper.PriceMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,11 @@ class PriceServiceImplTest {
 
     @Autowired
     PriceService priceService;
+
+    @BeforeEach
+    void setUp() {
+        PriceObjetcMother.ANY_DTO.setPrice(35.50);
+    }
 
     @Test
     void findPrice() {

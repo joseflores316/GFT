@@ -2,10 +2,13 @@ package com.cronos.gft.infraestructure.rest.controller;
 
 import com.cronos.gft.application.service.PriceService;
 import com.cronos.gft.domain.models.PriceDto;
+import com.cronos.gft.infraestructure.exceptions.BadArgumentsException;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -26,7 +29,11 @@ public class PriceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<PriceDto> getPrice(@RequestParam String date, @RequestParam Long productId, @RequestParam Long brandId) {
+    public ResponseEntity<PriceDto> getPrice(@RequestParam(required = false) String date, @RequestParam(required = false) Long productId, @RequestParam(required = false) Long brandId)  {
+        //return error message when the parameter is missing
+        if (date == null || productId == null || brandId == null) {
+            throw new BadArgumentsException("Missing parameters");
+        }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

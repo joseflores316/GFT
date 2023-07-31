@@ -3,6 +3,7 @@ package com.cronos.gft.infraestructure.rest.controller;
 import com.cronos.gft.application.service.PriceService;
 import com.cronos.gft.builder.PriceObjetcMother;
 import com.cronos.gft.domain.models.PriceDto;
+import com.cronos.gft.infraestructure.exceptions.BadArgumentsException;
 import com.cronos.gft.infraestructure.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -117,6 +118,32 @@ class PriceControllerTest {
                 .andExpect(jsonPath("$.price").value(38.95));
 
         verify(priceService, times(1)).findPrice(LocalDateTime.parse("2020-06-16 21:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 35455L, 1L);
+    }
+
+    @Test
+    void getBadArgumentsException() throws Exception{
+
+        //Given
+        when(priceService.findPrice(LocalDateTime.parse("2020-06-13 10:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 35455L, 1L)).thenThrow(new ResourceNotFoundException("Price not found"));
+
+        //When
+        mockMvc.perform(get("/api/price?date=2020-06-13 10:00:00&productId=35455&brandId=1").contentType("application/json"))
+                //Then
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResourceNotFoundException));
+
+        verify(priceService, times(1)).findPrice(LocalDateTime.parse("2020-06-13 10:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 35455L, 1L);
+    }
+
+    @Test
+    void getResourceNotFoundException() throws Exception{
+
+        //Given
+        mockMvc.perform(get("/api/price?date=2020-06-13 10:00:00&productId=35455").contentType("application/json"))
+                //Then
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof BadArgumentsException));
+
     }
 
 }
