@@ -1,21 +1,21 @@
 package com.cronos.gft.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyList;
+import static org.mockito.Mockito.when;
 import com.cronos.gft.application.service.PriceService;
 import com.cronos.gft.builder.PriceObjetcMother;
 import com.cronos.gft.infraestructure.adaptador.PriceJpaRepository;
 import com.cronos.gft.infraestructure.rest.mapper.PriceMapper;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 @SpringBootTest
 class PriceServiceImplTest {
 
@@ -44,7 +44,7 @@ class PriceServiceImplTest {
         when(priceMapper.toDto(any())).thenReturn(PriceObjetcMother.ANY_DTO);
         when(priceMapper.toDtoList(anyList())).thenReturn(PriceObjetcMother.ANY_LIST_DTO);
 
-        assertEquals(PriceObjetcMother.ANY_DTO,priceService.findPrice(parseDate, 35455L, 1L));
+        assertEquals(PriceObjetcMother.ANY_DTO, priceService.findPrice(parseDate, 35455L, 1L));
 
 
     }

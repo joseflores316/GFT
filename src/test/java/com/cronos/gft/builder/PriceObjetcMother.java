@@ -2,7 +2,6 @@ package com.cronos.gft.builder;
 
 import com.cronos.gft.domain.models.PriceDto;
 import com.cronos.gft.infraestructure.entity.PriceEntity;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
