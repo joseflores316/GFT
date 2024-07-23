@@ -1,12 +1,11 @@
 package com.cronos.gft.domain.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PriceDto {
 
-    @Schema(name ="id" ,description = "Brand id", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(name = "id", description = "Brand id", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long id;
 
     private Long brandId;

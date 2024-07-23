@@ -4,11 +4,10 @@ import com.cronos.gft.application.service.PriceService;
 import com.cronos.gft.domain.models.PriceDto;
 import com.cronos.gft.domain.ports.PriceRepository;
 import com.cronos.gft.infraestructure.exceptions.ResourceNotFoundException;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PriceServiceImpl implements PriceService {
@@ -27,9 +26,9 @@ public class PriceServiceImpl implements PriceService {
                 .filter(priceDto -> priceDto.getBrandId().equals(brandId))
                 .toList();
 
-        if(priceList.size() > 1) {
+        if (priceList.size() > 1) {
             return priceList.stream().max(Comparator.comparing(PriceDto::getPriority)).get();
-        }else{
+        } else {
             return priceList.stream().findFirst().orElseThrow(() -> new ResourceNotFoundException("Price not found"));
         }
 
